@@ -36,6 +36,7 @@ Make sure all prerequisites are met:
 
 - [R/Rscript](http://www.r-project.org/)  v3.3.0 or higher
 - [Python](http://continuum.io/downloads) v2.7.8-anaconda-2.1.0
+- [htslib](http://www.htslib.org/download/) 1.3.2 or higher
 
 Install UROPA locally by running:
 
