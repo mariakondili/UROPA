@@ -34,8 +34,8 @@ Installation and Command-line usage
 ------------------------------------
 Make sure all prerequisites are met:
 
-- [R/Rscript](http://www.r-project.org/)
-- [Python](http://continuum.io/downloads)
+- [R/Rscript](http://www.r-project.org/)  v3.3.0 or higher
+- [Python](http://continuum.io/downloads) v2.7.8-anaconda-2.1.0
 
 Install UROPA locally by running:
 
