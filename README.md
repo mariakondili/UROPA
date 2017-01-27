@@ -34,9 +34,20 @@ Installation and Command-line usage
 ------------------------------------
 Make sure all prerequisites are met:
 
-- [R/Rscript](http://www.r-project.org/)  v3.3.0 or higher
-- [Python](http://continuum.io/downloads) v2.7.8-anaconda-2.1.0
-- [htslib](http://www.htslib.org/download/) 1.3.2 or higher
+- [R/Rscript](http://www.r-project.org/) (v3.3.0 or higher, follow instructions on url)
+
+- [Python](https://repo.continuum.io/archive/) (v2.7.8-anaconda-2.1.0)
+	* Choose Anaconda-2.1.0-Linux-x86 or -x86_64,
+	* Install with ```bash Anaconda2-4.2.0-Linux-x86_64.sh```, 
+	* Follow instructions and type 'yes' to prepend Anaconda to PATH in your .bashrc file,
+	* or type after installation: ``` $export PATH=/home/<user>/anaconda/bin:$PATH ```
+	
+- [htslib](https://github.com/samtools/htslib/blob/develop/INSTALL) (1.3.2 or higher, follow instructions on url)
+	* ```cd htslib-1.3.2/```
+	* ```./configure```
+	* ```make```
+	* ```make install ``` or ```sudo make prefix=/home/<user>/htslib install```
+
 
 Install required packages for R:
 ```bash
