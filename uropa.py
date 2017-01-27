@@ -29,7 +29,7 @@ import uropa.config as cfg
 import uropa.overlaps as ovls
 import uropa.annotation as ant
 
-if __name__ == "__main__":
+def main() :
 
     parser = argparse.ArgumentParser(
         prog="uropa.py",
@@ -286,9 +286,9 @@ if __name__ == "__main__":
             logger.warning(
                 "Split command not available. Falling back to one thread.")
 
-#
-# Processing peaks
-#
+   #
+   # Processing peaks
+   #
     input_args = [outdir, gtf_index, query_attributes, queries, max_distance, pr, gtf_has_chr]
 
     # Output FileNames common for any thread option
@@ -445,7 +445,7 @@ if __name__ == "__main__":
         if os.path.exists(summary_output):
             os.remove("summary_config.json")
 
-# Remove all other un-necessary files :
+    # Remove all other un-necessary files :
     if outputs_ready:
         os.remove(gtf_index)  # .gz
         os.remove(gtf_index + ".tbi")
@@ -456,3 +456,7 @@ if __name__ == "__main__":
             os.remove(gtf_cut_file + ".sorted")
 
     logger.info("End time: %s", datetime.datetime.now().strftime("%d.%m.%Y %H:%M"))
+
+#Call main to run uropa:
+if __name__ == '__main__':	
+	main()
