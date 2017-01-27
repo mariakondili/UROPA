@@ -54,9 +54,11 @@ Install required packages for R:
 install.packages(c("ggplot2", "devtools", "gplots", "gridExtra", "jsonlite", "VennDiagram"))
 source("https://bioconductor.org/biocLite.R")
 biocLite(c("RBGL","graph"))
-# to install the last required package, devtools has to be loaded to use the install from github function
+
+# To install the last required package-Vennerable, devtools has to be loaded to use the install from github function
 # if you copy this and want to use it in once, 
 # make sure the library loading is not interrupted by the question if present packages should be updated
+
 library(devtools)
 install_github("jenzopr/Vennerable")
 ```
