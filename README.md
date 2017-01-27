@@ -38,6 +38,18 @@ Make sure all prerequisites are met:
 - [Python](http://continuum.io/downloads) v2.7.8-anaconda-2.1.0
 - [htslib](http://www.htslib.org/download/) 1.3.2 or higher
 
+Install required packages for R:
+```bash
+install.packages(c("ggplot2", "devtools", "gplots", "gridExtra", "jsonlite", "VennDiagram"))
+source("https://bioconductor.org/biocLite.R")
+biocLite(c("RBGL","graph"))
+# to install the last required package, devtools has to be loaded to use the install from github function
+# if you copy this and want to use it in once, 
+# make sure the library loading is not interrupted by the question if present packages should be updated
+library(devtools)
+install_github("jenzopr/Vennerable")
+```
+
 Install UROPA locally by running:
 
 ```bash
