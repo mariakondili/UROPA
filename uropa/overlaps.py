@@ -51,7 +51,7 @@ def tabix_index(annot_gtf):
         os.system('bgzip -c  -f ' + annot_gtf +
                   '.sorted ' + ' > ' + out_zipped)
 
-    run_tabix = 'tabix -f  ' + out_zipped
+    run_tabix = 'tabix -f  -p gff' + out_zipped
     idx = subprocess.Popen(shlex.split(run_tabix), stdout=subprocess.PIPE)
     idx.wait()
 
@@ -82,7 +82,7 @@ def valid_strand(hit_str, p_str, q_str):
 
 
 def valid_attribute(attr_filter_key, attr_filter_val, hit):
-    """Validates the hit accoring to a filter attribute."""
+    """Validates the hit according to a filter attribute."""
     if (attr_filter_key != "None") and (attr_filter_val != "None"):
         try:
             # If key for filtering is not correct or doesn't exist-> error
