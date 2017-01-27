@@ -12,7 +12,7 @@ def annotation_process(input_args, peak_file, log=None):
      priority, gtf_has_chr] = input_args
 
     try:
-        anno = pysam.TabixFile(gtf_index)
+        anno = pysam.Tabixfile(gtf_index)
     except IOError:
         log.error("Unable to open tabix index {}.".format(gtf_index))
     except ValueError:
@@ -64,7 +64,7 @@ def annotation_process(input_args, peak_file, log=None):
                 str(peak['estart']) + '-' + str(peak['eend'])
 
             try:
-                hits = anno.fetch(tabix_query, multiple_iterators=True)
+                hits = anno.fetch(tabix_query) #multiple_iterators=True
             except ValueError:
                 hits = list()
                 if log is not None:
