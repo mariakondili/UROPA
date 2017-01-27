@@ -67,11 +67,11 @@ Install UROPA locally by running:
 
 ```bash
 git clone https://github.molgen.mpg.de/loosolab/UROPA.git
-export PATH=$PATH:dir/to/uropa/src
+export PATH=$PATH:dir/to/uropa/uropa.py 
 ```
 
-```bash                        
-Usage: uropa [options]          
+```python                         
+Usage: uropa.py [options]          
 
 Available options:
 	
