@@ -131,11 +131,11 @@ def annotation_process(input_args, peak_file, log=None):
                 if not valid_queries:
                     has_hits.append(False)
 
-            # ----- All hits parsed. Check only hits with valid-queries now ----- #
-            #log.debug("\n---All hits parsed for the peak.Totally, the Peak has {} hits from which {} are Valid ---".format( len(has_hits), has_hits.count(True) ))
-            # 9 cols= feat, f.start, f.end, f.strand, dist, min_pos, genom_loc,
-            # feat-to-peak-ovl , peak-to-feat-ovl (no Q)
+            #All hits parsed. Check only hits with valid-queries now...
+            
             nas_len = len(attrib_k) + 9
+                                    # 9 cols= feat, f.start, f.end, f.strand, dist, min_pos, genom_loc,
+                                    # feat-to-peak-ovl , peak-to-feat-ovl (no Q)
             NAsList_q = list(np.repeat("NA", nas_len))
 
             # Search hits with only Prior or Secondary Queries
@@ -197,10 +197,8 @@ def annotation_process(input_args, peak_file, log=None):
 
                     # print "Best distance found :{}".format(d_is_best)
                     if d_is_best and not same_gene:  # Dhit < Dbest
-                        #log.debug("\nDistance of Hit from Peak Center = {}, INFERIOR to current Min Distance = {} ".format(Dhit, min_dist[j][peak['id']][0]))
                         min_dist[j][peak['id']] = ovls.get_besthit(j, len(queries[j]["distance"]), peak[
                             'id'], hit, attrib_k, Dhit, min_dist)
-                        #print("Minimum distance updated: {}".format(min_dist[j][peak['id']][0]))
                         Best_res = ovls.create_table(peak['name'], peak['chr'], peak['start'], peak['end'], str(
                             peak['center']), min_dist[j][peak['id']], attrib_k, min_pos, genomic_location, ovl_pk, ovl_feat, j)
                         Best_hits_tab[j][peak['id']] = Best_res
@@ -208,7 +206,6 @@ def annotation_process(input_args, peak_file, log=None):
                     # Dhit > Dbest
                     # only if empty fill in with NAs
                     elif not d_is_best and not same_gene and Best_hits_tab[j][peak['id']] == "":
-                        #log.debug("\nDistance of Hit from Peak Center = {}, LARGER THAN current Min Distance = {}\n".format(Dhit, min_dist[j][peak['id']][0]))
                         Best_hits_tab[j][peak['id']] = "\t".join(np.hstack([peak['name'], peak['chr'], peak[
                             'start'], str(peak['center']), peak['end'], NAsList_q, str(j) + "\n"]))
 
@@ -222,13 +219,11 @@ def annotation_process(input_args, peak_file, log=None):
                             "distance"][0]], genomic_location, internals_location, Dhit)
 
                     if Dhit_smaller and not same_gene:
-                        #log.debug("Distance of hit SMALLER than Config Distance -> Hit written to All_Hits.")
                         All_hits_tab[j][peak['id']] = ovls.write_hit_to_All(All_hits_tab, peak['id'], attrib_k, Dhit, hit, peak['name'], peak['chr'], peak['start'],
                                                                             peak['end'], str(peak['center']), min_pos, genomic_location, ovl_pk, ovl_feat, j)
 
                     # Hit not fitting in any of the distance values
                     if not Dhit_smaller and queries[j]["internals"] != ["True"] and (All_hits_tab[j][peak['id']] == ''):
-                        #log.debug("\nDhit= {} is LARGER than config Distance:{}.".format(Dhit, queries[j]["distance"]))
                         # Write over empty or NA the new NA, for new hit,so
                         # each hit is parsed.
                         All_hits_tab[j][peak['id']] = "\t".join(np.hstack([peak['name'], peak['chr'], peak[
@@ -237,12 +232,10 @@ def annotation_process(input_args, peak_file, log=None):
                     # Hits with further Distance -> Check for Internals
                     if not Dhit_smaller and queries[j]["internals"] == ["True"] and not same_gene:
                         if "Inside" in genomic_location:
-                            #log.debug("\n-> Hit is 'Internal' with distance LARGER than config.distance.It will be recorded to the All_hits table.")
                             All_hits_tab[j][peak['id']] = ovls.write_hit_to_All(All_hits_tab, peak['id'], attrib_k, Dhit, hit, peak['name'], peak['chr'], peak['start'], peak['end'], str(peak['center']),
                                                                                 min_pos, genomic_location, ovl_pk, ovl_feat, j)
 
                     if not Dhit_smaller and All_hits_tab[j][peak['id']] != '':
-                        #log.debug("Hit has larger distance than allowed ")
                         continue
 
             # > Add to Best Hits the Best Internal features(when internals=True, D>config."distance"),
@@ -266,7 +259,6 @@ def annotation_process(input_args, peak_file, log=None):
                             if internal[mv_pos] in ["PeakInsideFeature", "FeatureInsidePeak"] and min_val != []:
                                 Best_hits_tab[j][peak['id']] = hit_line[
                                     mv_pos] + "\n"
-                                #logger.debug("\nBest Internal hit to be recorded: {}\n".format(hit_line[mv_pos]+"\n"))
 
                     else:  # if All_hits_tab[j][peak['id']] == "" :
                         continue
@@ -275,11 +267,11 @@ def annotation_process(input_args, peak_file, log=None):
             # Get them filled with NAs
             for a in range(len(queries)):
                 if All_hits_tab[a][peak['id']] == "":
-                    #log.debug("\nQuery {} didn't validate any hit ! All_hits will be filled in with NAs".format(a))
+                    #Query didn't validate any hit ! All_hits will be filled in with NAs
                     All_hits_tab[a][peak['id']] = "\t".join(np.hstack([peak['name'], peak['chr'], peak[
                         'start'], str(peak['center']), peak['end'], NAsList_q, str(a) + "\n"]))
                 if Best_hits_tab[a][peak['id']] == "":
-                    #log.debug("\nQuery {} didn't validate any hit !Best hits will be filled in with NAs".format(a))
+                    #Query didn't validate any hit !Best hits will be filled in with NAs
                     Best_hits_tab[a][peak['id']] = "\t".join(np.hstack([peak['name'], peak['chr'], peak[
                         'start'], str(peak['center']), peak['end'], NAsList_q, str(a) + "\n"]))
 
@@ -323,10 +315,10 @@ def annotation_process(input_args, peak_file, log=None):
                     # Queries with NA: map(lambda qna :
                     # All_hits_tab[qna][peak['id']], Q_NA)
                     repl_q = min(QnotNA)  # The query to be used instead of qO.
-                    ##log.debug ("Priority Query hasn't given any hit, so it will be replaced by secondary Query's Hit: {} ".format (repl_q))
+                    #Priority Query hasn't given any hit, so it will be replaced by secondary Query's Hit:repl_q
                     All_hits_tab[0][peak['id']] = Best_hits_tab[
                         0][peak['id']] = ""
-                    ##log.debug ("\nHits from Secondary Q to replace priority query: \n{} ".format(All_hits_tab[repl_q][peak['id']] ))
+                    #Hits from Secondary Q to replace priority query:All_hits_tab[repl_q][peak['id']]
                     rest_QnotNA = [qn for qn in QnotNA if qn != repl_q]
                     if any(rest_QnotNA):
                         for qr in rest_QnotNA:
@@ -337,10 +329,10 @@ def annotation_process(input_args, peak_file, log=None):
                             qna][peak['id']] = ""
 
                 if all(isNA):
-                    #logg.debug("\nNo query has any Hit.No replacement of Priority Query possible-> NAs will be filled in the Output.")
+                    #No query has any Hit.No replacement of Priority Query possible-> NAs will be filled in the Output.
                     TabInList_p = map(lambda l: All_hits_tab[l][
                         peak['id']], range(len(queries)))
-                    ##log.debug("Hit lines for all queries are : {}".format(TabInList_p ))
+                    #Hit lines for all queries are :format(TabInList_p
                     # If all_hits_tab doesn't have all queries will have ""
                     TabInList_p = [Tab for Tab in TabInList_p if Tab != ""]
 
@@ -353,7 +345,7 @@ def annotation_process(input_args, peak_file, log=None):
                         peak['id']] = ovls.merge_queries(TabInList_p)
                     Best_hits_tab[0][
                         peak['id']] = ovls.merge_queries(TabInList_p)
-                    ##log.debug("\nQueries hits for this peak to be merged in the Q.col:{}".format(ovls.merge_queries(TabInList_p)) )
+                    #Queries hits for this peak to be merged in the Q.col:ovls.merge_queries(TabInList_p)
                     for r in rest_q:
                         All_hits_tab[r][peak['id']] = Best_hits_tab[
                             r][peak['id']] = ""
