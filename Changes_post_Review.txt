@@ -1,0 +1,36 @@
+#1/ DONE
+when uropa.py -h : ... "Optionally, the priority and bigwig keys can be used to fine tune UROPAs behaviour" --> bigwig not provided-> to be deleted
+
+#2/DONE
+line 85 @overlaps.py: 
+"""Validates the hit accor-d-ing to a filter attribute."""
+
+#3/ DONE
+Line 15@annotation.py : F-> f
+anno = pysam.Tabixfile(gtf_index)
+(http://pysam.readthedocs.io/en/latest/usage.html, shows with 'F' but when running gives Error:
+'pysam attribute doesn't exist')
+also:
+#4/ anno.fetch(tabix_query) -> without: multiple_iterators=True (DONE)
+
+#5/ DONE
+line 139 @uropa.py
+logger.error("File %s does not exist or is not readable.", config)-> exist without (s)
+
+#6/Write log_file / DONE
+@line 118, uropa.py : Transfer lines of "filehandle"(124-27) outside the try-except block!
+
+
+#7/ Message when running: DONE
+[tabix] The file type not recognised and -p not given, using the preset [gff]
+>>line54@overlaps.py:  run_tabix = 'tabix -f *-p gff* ' + out_zipped  , WORKED ! 
+
+#8/ DONE
+line 146@ uropa.py: 
+ parameters = cfg.parse_parameters(cfg_dict, logger) -> remove :log=None 
+
+#9/ 'log.debug' commented in annotation.py -> deleted most (DONE)
+
+#10/> Note in help instr. that intermediate files are created in the Output dir given, 
+e.x: splitted_peaks and gtf_cut_per_feature
+
