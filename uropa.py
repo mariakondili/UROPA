@@ -117,18 +117,19 @@ if __name__ == "__main__":
     
     if args.log is not None:
 	logpath = os.path.dirname(args.log)
+	# when no dir given, consider current dir to save it
+	logpath = os.getcwd() if logpath =="" or logpath=="." else logpath
         if not os.path.exists(logpath):
             try:
                 os.makedirs(logpath)
-                fileHandle = logging.FileHandler(args.log, mode='w')
-                fileHandle.setLevel(logging.DEBUG)
-                fileHandle.setFormatter(loggerFormat)
-                logger.addHandler(fileHandle)
             except OSError:
                 logger.error("Could not create directory for log file {}".format(logpath))
             except IOError:
                 logger.error("Could not create log file {}".format(args.log))
-
+	fileHandle = logging.FileHandler(args.log, mode='w')
+      	fileHandle.setLevel(logging.DEBUG)
+        fileHandle.setFormatter(loggerFormat)
+       	logger.addHandler(fileHandle)
     logger.info("Start time: %s", datetime.datetime.now().strftime("%d.%m.%Y %H:%M"))
 
     if not os.path.exists(outdir):
@@ -136,7 +137,7 @@ if __name__ == "__main__":
     try:
         cfg_dict = cfg.parse_json(config)
     except IOError:
-        logger.error("File %s does not exists or is not readable.", config)
+        logger.error("File %s does not exist or is not readable.", config)
         sys.exit()
     except ValueError as e:
         logger.error("File %s contains malformed JSON. %s", config, e)
